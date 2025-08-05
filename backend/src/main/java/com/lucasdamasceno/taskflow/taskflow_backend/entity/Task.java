@@ -21,7 +21,7 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private Priority priority;
     @ManyToOne
-    @JoinColumn(name = "assingnee_id")
+    @JoinColumn(name = "assignee_id")
     private User assignee;
     @ManyToOne
     @JoinColumn(name = "project_id")

@@ -1,9 +1,9 @@
 package com.lucasdamasceno.taskflow.taskflow_backend.entity;
 
+import com.lucasdamasceno.taskflow.taskflow_backend.util.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.management.relation.Role;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,6 +18,7 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
     private LocalDateTime createdAt;
 }
