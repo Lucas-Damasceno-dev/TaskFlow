@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/tasks")
@@ -19,7 +20,7 @@ public class TaskController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<TaskDto> createTask(@RequestBody CreateTaskDto dto) {
+    public ResponseEntity<TaskDto> createTask(@Valid @RequestBody CreateTaskDto dto) {
         Task task = taskService.createTask(dto);
         return new ResponseEntity<>(modelMapper.map(task, TaskDto.class), HttpStatus.CREATED);
     }

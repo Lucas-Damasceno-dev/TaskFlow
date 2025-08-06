@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +27,7 @@ public class ProjectController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<ProjectDto> createProject(@RequestBody CreateProjectDto dto) {
+    public ResponseEntity<ProjectDto> createProject(@Valid @RequestBody CreateProjectDto dto) {
         User owner = userService.findUserById(1L); // Temporary: get the first user
         Project project = projectService.createProject(dto, owner);
         return new ResponseEntity<>(modelMapper.map(project, ProjectDto.class), HttpStatus.CREATED);
@@ -48,7 +49,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProjectDto> updateProject(@PathVariable Long id, @RequestBody UpdateProjectDto dto) {
+    public ResponseEntity<ProjectDto> updateProject(@PathVariable Long id, @Valid @RequestBody UpdateProjectDto dto) {
         Project project = projectService.updateProject(id, dto);
         return ResponseEntity.ok(modelMapper.map(project, ProjectDto.class));
     }
