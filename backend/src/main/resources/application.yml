@@ -1,7 +1,11 @@
 spring:
-
   application:
-    name: "TaskFlow - Project Management System (Backend)"
+    name: taskflow-backend
+
+jwt:
+  secret: your-secret-key
+  expiration: 86400000 # 24 hours
+
 
   datasource:
     url:
