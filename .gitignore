@@ -1,0 +1,124 @@
+# ===========================
+# JAVA / SPRING BOOT
+# ===========================
+*.class
+*.jar
+*.war
+*.ear
+
+# Maven
+target/
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle-cache/
+
+# Logs
+*.log
+logs/
+*.out
+
+# Configuration
+*.iml
+*.ipr
+*.iws
+
+# ===========================
+# ANGULAR / NODE
+# ===========================
+node_modules/
+dist/
+tmp/
+out-tsc/
+.angular/
+.angular-cache/
+.npm/
+.yarn/
+package-lock.json
+yarn.lock
+
+# Environment files
+.env
+.env.*.local
+*.env
+
+# ===========================
+# OS-SPECIFIC FILES
+# ===========================
+.DS_Store
+Thumbs.db
+
+# ===========================
+# IDE / INTELLIJ
+# ===========================
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# JetBrains Rider
+.idea/
+.idea_modules/
+*.sln.iml
+
+# ===========================
+# DOCKER
+# ===========================
+**/.docker/
+**/docker-compose.override.yml
+**/docker-compose.override.yaml
+docker-compose.override.yml
+docker-compose.override.yaml
+**/.env
+.dockerignore
+
+# Docker volumes and containers
+**/data/
+**/volumes/
+
+# ===========================
+# POSTGRESQL (if using local volumes)
+# ===========================
+pgdata/
+postgres-data/
+*.sql~
+*.dump
+*.backup
+
+# ===========================
+# TEST / TEMP FILES
+# ===========================
+*.swp
+*.swo
+*~
+*.bak
+*.tmp
+*.temp
+*.orig
+
+# Coverage / Reports
+coverage/
+lcov-report/
+test-output/
+jacoco.exec
+*.lcov
+*.exec
+
+# ===========================
+# BACKUP FILES
+# ===========================
+*.old
+*.bak
+*.tmp
+*.orig
+*.rej
