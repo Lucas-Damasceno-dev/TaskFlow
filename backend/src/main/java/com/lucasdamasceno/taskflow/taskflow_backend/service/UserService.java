@@ -15,7 +15,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public User findUserById(Long id) {
+    public User findUserById(Long id) throws EntityNotFoundException {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
     }
