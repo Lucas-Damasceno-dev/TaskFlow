@@ -52,7 +52,13 @@
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "production",
+          "fileReplacements": [
+            {
+              "replace": "src/environments/environment.ts",
+              "with": "src/environments/environment.prod.ts"
+            }
+          ]
         },
         "serve": {
           "builder": "@angular/build:dev-server",
