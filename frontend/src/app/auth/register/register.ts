@@ -1,29 +1,51 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { User } from '../../models/user.model';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { User } from '../../models/user.model';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.html',
   styleUrls: ['./register.scss'],
   standalone: true,
-  imports: [FormsModule, CommonModule, RouterModule]
+  imports: [ReactiveFormsModule, CommonModule, RouterModule]
 })
-export class RegisterComponent {
-  user: User = { _id: '', name: '', email: '', password: '' };
+export class RegisterComponent implements OnInit {
+  registerForm: FormGroup;
+  errorMessage: string | null = null;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private fb: FormBuilder
+  ) { }
+
+  ngOnInit(): void {
+    this.registerForm = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
+
+  get name() { return this.registerForm.get('name'); }
+  get email() { return this.registerForm.get('email'); }
+  get password() { return this.registerForm.get('password'); }
 
   register(): void {
-    this.authService.register(this.user).subscribe(
+    if (this.registerForm.invalid) {
+      return;
+    }
+
+    this.authService.register(this.registerForm.value as User).subscribe(
       () => {
         this.router.navigate(['/auth/login']);
       },
       (error) => {
         console.error('Registration failed:', error);
+        this.errorMessage = 'Registration failed. Please try again.';
       }
     );
   }

@@ -1,8 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../models/user.model';
+import { LoginCredentials } from '../models/credentials.model';
+import { TokenResponse } from '../models/token-response.model';
+import { ValidationService } from './validation.service';
+import { UserSchema } from '../models/user.zod';
+import { LoginCredentialsSchema } from '../models/credentials.zod';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +18,16 @@ export class AuthService {
 
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private validationService: ValidationService) { }
 
-  login(credentials: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
-      tap((response: any) => {
+  login(credentials: LoginCredentials): Observable<TokenResponse> {
+    const validationResult = this.validationService.validate(LoginCredentialsSchema, credentials);
+    if (!validationResult.success) {
+      return throwError(() => validationResult.error);
+    }
+
+    return this.http.post<TokenResponse>(`${this.apiUrl}/login`, validationResult.data).pipe(
+      tap(response => {
         this.setToken(response.accessToken);
         this.setRefreshToken(response.refreshToken);
         this.isAuthenticatedSubject.next(true);
@@ -25,8 +35,13 @@ export class AuthService {
     );
   }
 
-  register(user: User): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user);
+  register(user: User): Observable<User> {
+    const validationResult = this.validationService.validate(UserSchema, user);
+    if (!validationResult.success) {
+      return throwError(() => validationResult.error);
+    }
+
+    return this.http.post<User>(`${this.apiUrl}/register`, validationResult.data);
   }
 
   logout(): void {
@@ -35,10 +50,10 @@ export class AuthService {
     this.isAuthenticatedSubject.next(false);
   }
 
-  refreshToken(): Observable<any> {
+  refreshToken(): Observable<TokenResponse> {
     const refreshToken = this.getRefreshToken();
-    return this.http.post(`${this.apiUrl}/refresh`, { refreshToken }).pipe(
-      tap((response: any) => {
+    return this.http.post<TokenResponse>(`${this.apiUrl}/refresh`, { refreshToken }).pipe(
+      tap(response => {
         this.setToken(response.accessToken);
       })
     );
