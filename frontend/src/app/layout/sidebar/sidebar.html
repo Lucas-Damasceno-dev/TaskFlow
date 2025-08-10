@@ -1,3 +1,4 @@
+<div class="sidebar-backdrop" *ngIf="isOpen()" (click)="sidebarService.toggle()"></div>
 <div class="sidebar" [class.open]="isOpen()">
   <div class="logo">
     <a href="/">TaskFlow</a>
