@@ -1,3 +1,37 @@
-<h2>Dashboard</h2>
-<p>Welcome to your dashboard!</p>
-<button (click)="logout()">Logout</button>
+<div class="dashboard-container">
+  <h1 class="dashboard-title">Dashboard</h1>
+
+  <app-date-filter></app-date-filter>
+
+  <div class="stats-cards-container">
+    <app-stats-card
+      title="Total Projects"
+      value="150"
+      description="Projects completed this month"
+    ></app-stats-card>
+    <app-stats-card
+      title="Pending Tasks"
+      value="25"
+      description="Tasks remaining"
+    ></app-stats-card>
+    <app-stats-card
+      title="Team Members"
+      value="12"
+      description="Active members"
+    ></app-stats-card>
+    <app-stats-card
+      title="Revenue"
+      value="$12,500"
+      description="This quarter"
+    ></app-stats-card>
+  </div>
+
+  <div class="widgets-container">
+    <div class="chart-container">
+      <app-project-chart></app-project-chart>
+    </div>
+    <div class="progress-widget-container">
+      <app-progress-widget [progress]="75"></app-progress-widget>
+    </div>
+  </div>
+</div>
