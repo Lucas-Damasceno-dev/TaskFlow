@@ -1,0 +1,54 @@
+:host {
+  .sidebar {
+    background-color: var(--sidebar-background-color);
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .logo {
+      margin-bottom: 30px;
+      a {
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--text-color);
+      }
+    }
+
+    .nav {
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          margin-bottom: 10px;
+
+          a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none;
+      width: 100%;
+      height: auto;
+      position: relative;
+
+      &.open {
+        display: block;
+      }
+    }
+  }
+}
