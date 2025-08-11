@@ -14,6 +14,7 @@ import { LoginCredentialsSchema } from '../models/credentials.zod';
 })
 export class AuthService {
   private apiUrl = 'auth';
+  private accessToken: string | null = null;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
 
   isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
@@ -52,6 +53,7 @@ export class AuthService {
 
   refreshToken(): Observable<TokenResponse> {
     const refreshToken = this.getRefreshToken();
+    // The backend endpoint /api/auth/refresh needs to be implemented
     return this.http.post<TokenResponse>(`${this.apiUrl}/refresh`, { refreshToken }).pipe(
       tap(response => {
         this.setToken(response.accessToken);
@@ -60,21 +62,23 @@ export class AuthService {
   }
 
   private hasToken(): boolean {
-    return !!localStorage.getItem('token');
+    return !!this.accessToken;
   }
 
   setToken(token: string): void {
-    localStorage.setItem('token', token);
+    this.accessToken = token;
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return this.accessToken;
   }
 
   removeToken(): void {
-    localStorage.removeItem('token');
+    this.accessToken = null;
   }
 
+  // Refresh token remains in localStorage for now.
+  // For production, it should be stored in a secure HttpOnly cookie handled by the backend.
   setRefreshToken(token: string): void {
     localStorage.setItem('refreshToken', token);
   }
