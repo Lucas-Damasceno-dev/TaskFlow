@@ -19,16 +19,16 @@ public class CreateProjectDto {
     @FutureOrPresent(message = "Start date cannot be in the past")
     private LocalDate startDate;
 
-    @Future(message = "End date must be in the future")
+    @FutureOrPresent(message = "End date must be in the future or present")
     private LocalDate endDate;
 
     private List<Long> memberIds;
 
-    @AssertTrue(message = "End date must be after start date")
+    @AssertTrue(message = "End date must be after or equal to start date")
     public boolean isEndDateValid() {
-        if (startDate == null || endDate == null) {
+        if (endDate == null) {
             return true;
         }
-        return endDate.isAfter(startDate);
+        return !endDate.isBefore(startDate);
     }
 }

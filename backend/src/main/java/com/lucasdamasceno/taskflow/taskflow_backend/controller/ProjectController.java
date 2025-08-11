@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
@@ -27,8 +29,9 @@ public class ProjectController {
     private final ModelMapper modelMapper;
 
     @PostMapping
-    public ResponseEntity<ProjectDto> createProject(@Valid @RequestBody CreateProjectDto dto) {
-        User owner = userService.findUserById(1L); // Temporary: get the first user
+    public ResponseEntity<ProjectDto> createProject(@Valid @RequestBody CreateProjectDto dto, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User owner = (User) userService.loadUserByUsername(userDetails.getUsername());
         Project project = projectService.createProject(dto, owner);
         return new ResponseEntity<>(modelMapper.map(project, ProjectDto.class), HttpStatus.CREATED);
     }
@@ -49,14 +52,18 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProjectDto> updateProject(@PathVariable Long id, @Valid @RequestBody UpdateProjectDto dto) {
-        Project project = projectService.updateProject(id, dto);
+    public ResponseEntity<ProjectDto> updateProject(@PathVariable Long id, @Valid @RequestBody UpdateProjectDto dto, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = (User) userService.loadUserByUsername(userDetails.getUsername());
+        Project project = projectService.updateProject(id, dto, user);
         return ResponseEntity.ok(modelMapper.map(project, ProjectDto.class));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
-        projectService.deleteProject(id);
+    public ResponseEntity<Void> deleteProject(@PathVariable Long id, Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = (User) userService.loadUserByUsername(userDetails.getUsername());
+        projectService.deleteProject(id, user);
         return ResponseEntity.noContent().build();
     }
 }

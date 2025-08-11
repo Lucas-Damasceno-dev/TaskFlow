@@ -11,6 +11,7 @@ import com.lucasdamasceno.taskflow.taskflow_backend.util.enums.ProjectStatus;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,14 +40,25 @@ public class ProjectService {
         return projectRepository.findAll();
     }
 
-    public Project updateProject(Long id, UpdateProjectDto dto) {
+    public Project updateProject(Long id, UpdateProjectDto dto, User user) {
         Project project = findProjectById(id);
+        if (!isOwner(user, project)) {
+            throw new AccessDeniedException("You are not the owner of this project.");
+        }
         modelMapper.map(dto, project);
         return projectRepository.save(project);
     }
 
-    public void deleteProject(Long id) {
+    public void deleteProject(Long id, User user) {
+        Project project = findProjectById(id);
+        if (!isOwner(user, project)) {
+            throw new AccessDeniedException("You are not the owner of this project.");
+        }
         projectRepository.deleteById(id);
+    }
+
+    private boolean isOwner(User user, Project project) {
+        return project.getOwner().getId().equals(user.getId());
     }
 
     public ProjectDto toProjectDto(Project project) {

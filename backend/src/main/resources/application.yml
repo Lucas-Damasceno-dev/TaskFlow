@@ -3,14 +3,14 @@ spring:
     name: taskflow-backend
 
 jwt:
-  secret: your-secret-key
+  secret: ${JWT_SECRET:your-secret-key-default}
   expiration: 86400000 # 24 hours
 
 
   datasource:
-    url:
-    username:
-    password:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
     driver-class-name: org.postgresql.Driver
 
   jpa:
