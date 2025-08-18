@@ -116,7 +116,7 @@ class ProjectServiceTest {
         when(projectRepository.save(any(Project.class))).thenReturn(project);
         doNothing().when(modelMapper).map(updateProjectDto, project);
 
-        Project updatedProject = projectService.updateProject(1L, updateProjectDto);
+        Project updatedProject = projectService.updateProject(1L, updateProjectDto, owner);
 
         assertNotNull(updatedProject);
         verify(projectRepository, times(1)).findById(1L);
@@ -129,7 +129,7 @@ class ProjectServiceTest {
         when(projectRepository.findById(2L)).thenReturn(Optional.empty());
 
         Exception exception = assertThrows(EntityNotFoundException.class, () -> {
-            projectService.updateProject(2L, updateProjectDto);
+            projectService.updateProject(2L, updateProjectDto, owner);
         });
 
         assertEquals("Project not found with id: 2", exception.getMessage());
@@ -140,9 +140,9 @@ class ProjectServiceTest {
 
     @Test
     void deleteProject_shouldDeleteProject() {
-        doNothing().when(projectRepository).deleteById(1L);
+        when(projectRepository.findById(1L)).thenReturn(Optional.of(project));
 
-        projectService.deleteProject(1L);
+        projectService.deleteProject(1L, owner);
 
         verify(projectRepository, times(1)).deleteById(1L);
     }
