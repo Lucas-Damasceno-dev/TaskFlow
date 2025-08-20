@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { User } from '../models/user.model';
-import { LoginCredentials } from '../models/credentials.model';
-import { TokenResponse } from '../models/token-response.model';
+import { User } from '@models/user.model';
+import { LoginCredentials } from '@models/credentials.model';
+import { TokenResponse } from '@models/token-response.model';
+import { UserSchema } from '@models/user.zod';
+import { LoginCredentialsSchema } from '@models/credentials.zod';
 import { ValidationService } from './validation.service';
-import { UserSchema } from '../models/user.zod';
-import { LoginCredentialsSchema } from '../models/credentials.zod';
 
 @Injectable({
   providedIn: 'root'

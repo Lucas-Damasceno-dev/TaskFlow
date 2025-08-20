@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { LoginCredentials } from '../../models/credentials.model';
+import { LoginCredentials } from '../../../models/credentials.model';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ import { LoginCredentials } from '../../models/credentials.model';
   imports: [ReactiveFormsModule, CommonModule, RouterModule]
 })
 export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
+  loginForm!: FormGroup;
   errorMessage: string | null = null;
 
   constructor(
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       () => {
         this.router.navigate(['/dashboard']);
       },
-      (error) => {
+      (error: any) => {
         console.error('Login failed:', error);
         this.errorMessage = 'Login failed. Please check your credentials.';
       }

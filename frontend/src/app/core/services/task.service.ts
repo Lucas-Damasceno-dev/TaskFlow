@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { Task } from '../models/task.model';
+import { Task } from '../../models/task.model';
 import { ValidationService } from './validation.service';
-import { TaskSchema } from '../models/task.zod';
+import { TaskSchema } from '../../models/task.zod';
 
 @Injectable({
   providedIn: 'root'

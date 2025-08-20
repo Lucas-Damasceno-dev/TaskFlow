@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../../core/services/auth.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { User } from '../../models/user.model';
+import { User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +13,7 @@ import { User } from '../../models/user.model';
   imports: [ReactiveFormsModule, CommonModule, RouterModule]
 })
 export class RegisterComponent implements OnInit {
-  registerForm: FormGroup;
+  registerForm!: FormGroup;
   errorMessage: string | null = null;
 
   constructor(
@@ -43,7 +43,7 @@ export class RegisterComponent implements OnInit {
       () => {
         this.router.navigate(['/auth/login']);
       },
-      (error) => {
+      (error: any) => {
         console.error('Registration failed:', error);
         this.errorMessage = 'Registration failed. Please try again.';
       }

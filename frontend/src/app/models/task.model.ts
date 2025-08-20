@@ -4,4 +4,5 @@ export interface Task {
   description: string;
   status: 'todo' | 'inprogress' | 'inreview' | 'done';
   projectId: string;
+  dueDate?: string;
 }
