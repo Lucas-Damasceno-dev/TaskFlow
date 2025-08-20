@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './sidebar.html',
   styleUrl: './sidebar.scss'
 })
-export class Sidebar {
+export class SidebarComponent {
   public sidebarService = inject(SidebarService);
   isOpen = this.sidebarService.isOpen$;
 }

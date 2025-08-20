@@ -7,7 +7,7 @@ import { SidebarService } from '../../core/services/sidebar.service';
   templateUrl: './toolbar.html',
   styleUrl: './toolbar.scss'
 })
-export class Toolbar {
+export class ToolbarComponent {
   private sidebarService = inject(SidebarService);
   private renderer = inject(Renderer2);
 
