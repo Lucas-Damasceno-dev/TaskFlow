@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './stats-card.html',
   styleUrl: './stats-card.scss'
 })
-export class StatsCard {
+export class StatsCardComponent {
   @Input() title: string = '';
   @Input() value: string = '';
   @Input() description: string = '';

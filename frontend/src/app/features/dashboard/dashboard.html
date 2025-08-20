@@ -3,35 +3,43 @@
 
   <app-date-filter></app-date-filter>
 
-  <div class="stats-cards-container">
+  <div *ngIf="isLoading" class="loading-indicator">
+    <p>Loading dashboard data...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+
+  <div class="stats-cards-container" *ngIf="!isLoading && !error">
     <app-stats-card
       title="Total Projects"
-      value="150"
-      description="Projects completed this month"
-    ></app-stats-card>
+      [value]="totalProjects.toString()"
+      description="All projects in the system">
+    </app-stats-card>
     <app-stats-card
       title="Pending Tasks"
-      value="25"
-      description="Tasks remaining"
-    ></app-stats-card>
+      [value]="pendingTasks.toString()"
+      description="Tasks not yet completed">
+    </app-stats-card>
+    <app-stats-card
+      title="Completed Tasks"
+      [value]="completedTasks.toString()"
+      description="Tasks marked as completed">
+    </app-stats-card>
     <app-stats-card
       title="Team Members"
       value="12"
-      description="Active members"
-    ></app-stats-card>
-    <app-stats-card
-      title="Revenue"
-      value="$12,500"
-      description="This quarter"
-    ></app-stats-card>
+      description="Active members">
+    </app-stats-card>
   </div>
 
-  <div class="widgets-container">
+  <div class="widgets-container" *ngIf="!isLoading && !error">
     <div class="chart-container">
-      <app-project-chart></app-project-chart>
+      <app-project-chart [projects]="projects"></app-project-chart>
     </div>
     <div class="progress-widget-container">
-      <app-progress-widget [progress]="75"></app-progress-widget>
+      <app-progress-widget [progress]="(completedTasks / (pendingTasks + completedTasks || 1)) * 100"></app-progress-widget>
     </div>
   </div>
 </div>
