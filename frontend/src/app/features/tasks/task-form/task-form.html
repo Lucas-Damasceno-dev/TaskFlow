@@ -1,1 +1,58 @@
-<p>task-form works!</p>
+<div class="container">
+  <header class="page-header">
+    <h1>{{ isEditMode ? 'Edit Task' : 'Create Task' }}</h1>
+  </header>
+
+  <div *ngIf="isLoading" class="loading-indicator">
+    <p>Loading...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input id="title" formControlName="title" type="text">
+      <div *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched" class="validation-error">
+        Title is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+      <div *ngIf="taskForm.get('description')?.invalid && taskForm.get('description')?.touched" class="validation-error">
+        Description is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dueDate">Due Date</label>
+      <input id="dueDate" formControlName="dueDate" type="date">
+      <div *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched" class="validation-error">
+        Due date is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select id="status" formControlName="status">
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Completed">Completed</option>
+      </select>
+      <div *ngIf="taskForm.get('status')?.invalid && taskForm.get('status')?.touched" class="validation-error">
+        Status is required.
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="taskForm.invalid || isLoading" class="btn btn-primary">
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+      <a [routerLink]="['/projects', projectId]" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
