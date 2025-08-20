@@ -1,1 +1,32 @@
-<p>project-detail works!</p>
+<div class="container">
+  <div *ngIf="isLoading" class="loading-indicator">
+    <p>Loading project details...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+
+  <div *ngIf="project && !isLoading" class="project-details">
+    <header class="page-header">
+      <h1>{{ project.name }}</h1>
+      <a [routerLink]="['/projects/edit', project.id]" class="btn btn-secondary">Edit Project</a>
+    </header>
+
+    <section class="project-info">
+      <h2>Project Information</h2>
+      <p><strong>Description:</strong> {{ project.description }}</p>
+      <p><strong>Start Date:</strong> {{ project.startDate | date }}</p>
+      <p><strong>End Date:</strong> {{ project.endDate | date }}</p>
+    </section>
+
+    <section class="task-list">
+      <h2>Tasks</h2>
+      <header class="task-header">
+        <a [routerLink]="['/projects', project.id, 'tasks', 'new']" class="btn btn-primary">Create Task</a>
+      </header>
+      <!-- Task list will be rendered here -->
+      <app-task-list [tasks]="tasks"></app-task-list>
+    </section>
+  </div>
+</div>
