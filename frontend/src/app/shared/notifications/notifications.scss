@@ -1,0 +1,21 @@
+
+.toast-notification {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: #323232;
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 1000;
+  font-size: 1.1rem;
+  animation: fadeInOut 4s;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-20px); }
+}

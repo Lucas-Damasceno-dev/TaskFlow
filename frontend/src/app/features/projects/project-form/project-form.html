@@ -1,0 +1,54 @@
+<div class="container">
+  <header class="page-header">
+    <h1>{{ isEditMode ? 'Edit Project' : 'Create Project' }}</h1>
+  </header>
+
+  <div *ngIf="isLoading" class="loading-indicator">
+    <p>Loading...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    <p>{{ error }}</p>
+  </div>
+
+  <form [formGroup]="projectForm" (ngSubmit)="onSubmit()" *ngIf="!isLoading">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" formControlName="name" type="text">
+      <div *ngIf="projectForm.get('name')?.invalid && projectForm.get('name')?.touched" class="validation-error">
+        Name is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+      <div *ngIf="projectForm.get('description')?.invalid && projectForm.get('description')?.touched" class="validation-error">
+        Description is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="startDate">Start Date</label>
+      <input id="startDate" formControlName="startDate" type="date">
+      <div *ngIf="projectForm.get('startDate')?.invalid && projectForm.get('startDate')?.touched" class="validation-error">
+        Start date is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">End Date</label>
+      <input id="endDate" formControlName="endDate" type="date">
+      <div *ngIf="projectForm.get('endDate')?.invalid && projectForm.get('endDate')?.touched" class="validation-error">
+        End date is required.
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="projectForm.invalid || isLoading" class="btn btn-primary">
+        {{ isEditMode ? 'Update' : 'Create' }}
+      </button>
+      <a routerLink="/projects" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

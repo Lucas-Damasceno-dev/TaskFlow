@@ -1,0 +1,75 @@
+:host {
+  .sidebar {
+    background-color: var(--sidebar-background-color);
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+    .logo {
+      margin-bottom: 30px;
+      a {
+        text-decoration: none;
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--text-color);
+      }
+    }
+
+    .nav {
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+          margin-bottom: 10px;
+
+          a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+
+  .sidebar-backdrop {
+    display: none;
+  }
+  @media (max-width: 768px) {
+    .sidebar {
+      display: none;
+      width: 80vw;
+      max-width: 320px;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1100;
+      background: var(--sidebar-background-color);
+      box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease;
+      transform: translateX(-100%);
+    }
+    .sidebar.open {
+      display: block;
+      transform: translateX(0);
+    }
+    .sidebar-backdrop {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+  }
+}

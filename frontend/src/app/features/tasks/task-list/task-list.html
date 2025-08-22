@@ -1,0 +1,31 @@
+<div class="task-list-container">
+  <div *ngIf="tasks.length === 0" class="empty-state">
+    <p>No tasks found for this project.</p>
+  </div>
+
+  <div *ngIf="tasks.length > 0" class="task-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Due Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>{{ task.title }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.dueDate | date }}</td>
+          <td>{{ task.status }}</td>
+          <td class="actions">
+            <a [routerLink]="['/projects', task.projectId, 'tasks', 'edit', task.id]" class="btn btn-secondary">Edit</a>
+            <button class="btn btn-danger">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

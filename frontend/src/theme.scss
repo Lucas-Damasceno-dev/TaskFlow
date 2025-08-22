@@ -1,0 +1,19 @@
+body.light-theme {
+  --background-color: #fff;
+  --text-color: #333;
+  --sidebar-background-color: #f4f4f4;
+  --toolbar-background-color: #fff;
+  --toolbar-border-color: #ccc;
+  --breadcrumbs-background-color: #f8f8f8;
+  --breadcrumbs-border-color: #ccc;
+}
+
+body.dark-theme {
+  --background-color: #333;
+  --text-color: #fff;
+  --sidebar-background-color: #222;
+  --toolbar-background-color: #222;
+  --toolbar-border-color: #444;
+  --breadcrumbs-background-color: #2c2c2c;
+  --breadcrumbs-border-color: #444;
+}
