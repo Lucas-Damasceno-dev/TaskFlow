@@ -1,56 +1,57 @@
 # ===========================
 # BACKEND - JAVA / SPRING BOOT
 # ===========================
-backend/*.class
-backend/*.jar
-backend/*.war
-backend/*.ear
+# Compiled files
+*.class
+*.jar
+*.war
+*.ear
 
 # Maven
-backend/target/
-backend/.mvn/
-backend/pom.xml.tag
-backend/pom.xml.releaseBackup
-backend/pom.xml.versionsBackup
-backend/pom.xml.next
-backend/release.properties
-backend/dependency-reduced-pom.xml
-backend/buildNumber.properties
+target/
+.mvn/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
 
 # Gradle
-backend/.gradle/
-backend/build/
-!backend/gradle/wrapper/gradle-wrapper.jar
-backend/.gradle-cache/
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+.gradle-cache/
 
 # Logs
-backend/*.log
-backend/logs/
-backend/*.out
-
-# Configuration
-backend/*.iml
-backend/*.ipr
-backend/*.iws
+*.log
+logs/
+*.out
 
 # ===========================
 # FRONTEND - ANGULAR / NODE
 # ===========================
-frontend/node_modules/
-frontend/dist/
-frontend/tmp/
-frontend/out-tsc/
-frontend/.angular/
-frontend/.angular-cache/
-frontend/.npm/
-frontend/.yarn/
-frontend/package-lock.json
-frontend/yarn.lock
+node_modules/
+dist/
+tmp/
+out-tsc/
+.angular/
+.angular-cache/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm/
+.yarn/
+# Evite versionar o package-lock.json ou yarn.lock se for uma biblioteca, mas para aplicações é ok.
+# Deixarei comentado por enquanto, descomente se precisar.
+# package-lock.json
+# yarn.lock
 
 # Environment files
-frontend/.env
-frontend/.env.*.local
-frontend/*.env
+.env
+.env.*.local
+*.env
 
 # ===========================
 # OS-SPECIFIC FILES
@@ -59,30 +60,26 @@ frontend/*.env
 Thumbs.db
 
 # ===========================
-# IDE / INTELLIJ
+# IDE / INTELLIJ / VSCODE
 # ===========================
 .idea/
+.vscode/
 *.iml
 *.iws
 *.ipr
 
-# JetBrains Rider
-.idea/
-.idea_modules/
-*.sln.iml
-
 # ===========================
 # DOCKER
 # ===========================
-docker/.docker/
-docker/docker-compose.override.yml
-docker/docker-compose.override.yaml
-docker/.env
-docker/.dockerignore
+# Ignora arquivos e pastas do Docker em qualquer lugar do projeto
+**/.docker/
+**/docker-compose.override.yml
+**/docker-compose.override.yaml
+.dockerignore
 
-# Docker volumes and containers
-docker/data/
-docker/volumes/
+# Docker volumes e dados locais
+**/data/
+**/volumes/
 
 # ===========================
 # POSTGRESQL (if using local volumes)
@@ -94,8 +91,14 @@ postgres-data/
 *.backup
 
 # ===========================
-# TEST / TEMP FILES
+# TEST / TEMP / BACKUP FILES
 # ===========================
+coverage/
+lcov-report/
+test-output/
+jacoco.exec
+*.lcov
+*.exec
 *.swp
 *.swo
 *~
@@ -103,20 +106,5 @@ postgres-data/
 *.tmp
 *.temp
 *.orig
-
-# Coverage / Reports
-coverage/
-lcov-report/
-test-output/
-jacoco.exec
-*.lcov
-*.exec
-
-# ===========================
-# BACKUP FILES
-# ===========================
-*.old
-*.bak
-*.tmp
-*.orig
 *.rej
+*.old
