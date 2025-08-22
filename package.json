@@ -1,4 +1,19 @@
 {
+  "name": "taskflow",
+  "version": "1.0.0",
+  "description": "TaskFlow - Project Management System",
+  "scripts": {
+    "build": "npm run build:frontend && npm run build:backend",
+    "build:frontend": "cd frontend && npm run build",
+    "build:backend": "cd backend && mvn clean package",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "cd frontend && npm test",
+    "test:backend": "cd backend && mvn test",
+    "dev": "docker-compose up -d",
+    "dev:frontend": "cd frontend && npm start",
+    "dev:backend": "cd backend && mvn spring-boot:run",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && mvn install -DskipTests"
+  },
   "dependencies": {
     "@stomp/stompjs": "^7.1.1",
     "sockjs-client": "^1.6.1"
