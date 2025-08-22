@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../core/services/auth.service';
+import { AuthService } from '@core/services/auth.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { StatsCardComponent } from './stats-card/stats-card';
 import { ProjectChartComponent } from './project-chart/project-chart';
-import { BaseChartDirective } from 'ng2-charts';
 import { ProgressWidget } from './progress-widget/progress-widget';
 import { DateFilter } from './date-filter/date-filter';
-import { ProjectService } from '../../core/services/project.service';
-import { TaskService } from '../../core/services/task.service';
-import { Project } from '../../models/project.model';
-import { Task } from '../../models/task.model';
+import { ProjectService } from '@core/services/project.service';
+import { TaskService } from '@core/services/task.service';
+import { Project } from '@models/project.model';
+import { Task } from '@models/task.model';
 import { forkJoin, of } from 'rxjs';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 
