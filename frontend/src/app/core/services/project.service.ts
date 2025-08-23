@@ -9,7 +9,7 @@ import { ProjectSchema } from '../../models/project.zod';
   providedIn: 'root'
 })
 export class ProjectService {
-  private apiUrl = 'projects';
+  private apiUrl = 'api/projects';
 
   constructor(private http: HttpClient, private validationService: ValidationService) { }
 

@@ -13,7 +13,7 @@ import { ValidationService } from './validation.service';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'auth';
+  private apiUrl = 'api/auth';
   private accessToken: string | null = null;
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(this.hasToken());
 

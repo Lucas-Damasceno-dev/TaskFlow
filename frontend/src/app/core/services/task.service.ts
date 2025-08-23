@@ -9,7 +9,7 @@ import { TaskSchema } from '../../models/task.zod';
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'tasks';
+  private apiUrl = 'api/tasks';
 
   constructor(private http: HttpClient, private validationService: ValidationService) { }
 
