@@ -3,7 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { User } from '../../../models/user.model';
+import { RegistrationCredentials } from '../../../models/registration.model';
 
 @Component({
   selector: 'app-register',
@@ -39,7 +39,13 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.authService.register(this.registerForm.value as User).subscribe(
+    // Extract only the fields needed for registration
+    const { name, email, password } = this.registerForm.value;
+    
+    // Log the data being sent
+    console.log('Registering user with data:', { name, email, password });
+
+    this.authService.register({ name, email, password }).subscribe(
       () => {
         this.router.navigate(['/auth/login']);
       },
