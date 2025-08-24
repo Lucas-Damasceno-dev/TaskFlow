@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { Chart, ChartConfiguration, ChartData, ChartType, registerables } from 'chart.js';
 import { Project } from '../../../models/project.model';
 import { CommonModule } from '@angular/common';
 import { BaseChartDirective } from 'ng2-charts';
@@ -12,6 +12,10 @@ import { BaseChartDirective } from 'ng2-charts';
 })
 export class ProjectChartComponent implements OnChanges {
   @Input() projects: Project[] = [];
+
+  constructor() {
+    Chart.register(...registerables);
+  }
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
