@@ -71,4 +71,12 @@ export class ProjectDetail implements OnInit, OnDestroy {
   handleTaskDeleted(taskId: string): void {
     this.tasks = this.tasks.filter(task => task.id !== taskId);
   }
+
+  handleTaskStatusChanged(event: { taskId: string; newStatus: Task['status'] }): void {
+    // Update the task status in the local array
+    const taskIndex = this.tasks.findIndex(task => task.id === event.taskId);
+    if (taskIndex !== -1) {
+      this.tasks[taskIndex] = { ...this.tasks[taskIndex], status: event.newStatus };
+    }
+  }
 }
