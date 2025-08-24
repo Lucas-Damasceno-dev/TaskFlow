@@ -1,6 +1,6 @@
-import { Component, effect, signal } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Websocket } from '../../services/websocket';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-notifications',
@@ -10,18 +10,17 @@ import { Websocket } from '../../services/websocket';
   styleUrl: './notifications.scss'
 })
 export class Notifications {
-  notification = signal<string | null>(null);
-  show = signal(false);
+  constructor(public notificationService: NotificationService) {}
 
-  constructor(private ws: Websocket) {
-    effect(() => {
-      this.ws.notifications$.subscribe(msg => {
-        if (msg) {
-          this.notification.set(msg);
-          this.show.set(true);
-          setTimeout(() => this.show.set(false), 4000);
-        }
-      });
-    });
+  get notification() {
+    return this.notificationService.message;
+  }
+
+  get show() {
+    return this.notificationService.show;
+  }
+
+  get status() {
+    return this.notificationService.status;
   }
 }

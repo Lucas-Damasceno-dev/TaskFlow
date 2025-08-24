@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { ProjectService } from '../../../core/services/project.service';
 import { TaskService } from '../../../core/services/task.service';
@@ -6,6 +6,8 @@ import { Project } from '../../../models/project.model';
 import { Task } from '../../../models/task.model';
 import { CommonModule } from '@angular/common';
 import { TaskListComponent } from '../../tasks/task-list/task-list';
+import { Websocket } from '../../../services/websocket';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-detail',
@@ -13,16 +15,17 @@ import { TaskListComponent } from '../../tasks/task-list/task-list';
   templateUrl: './project-detail.html',
   styleUrls: ['./project-detail.scss']
 })
-export class ProjectDetail implements OnInit {
+export class ProjectDetail implements OnInit, OnDestroy {
   project: Project | null = null;
   tasks: Task[] = [];
   isLoading = true;
-  error: string | null = null;
+  private taskSubscription: Subscription | undefined;
 
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private websocket: Websocket
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +33,18 @@ export class ProjectDetail implements OnInit {
     if (projectId) {
       this.loadProjectDetails(projectId);
       this.loadTasks(projectId);
+
+      this.taskSubscription = this.websocket.tasks$.subscribe(task => {
+        if (task && task.projectId === projectId) {
+          this.loadTasks(projectId);
+        }
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.taskSubscription) {
+      this.taskSubscription.unsubscribe();
     }
   }
 
@@ -39,10 +54,8 @@ export class ProjectDetail implements OnInit {
         this.project = project;
         this.isLoading = false;
       },
-      error: (err) => {
-        this.error = 'Failed to load project details.';
+      error: () => {
         this.isLoading = false;
-        console.error(err);
       }
     });
   }
@@ -51,10 +64,6 @@ export class ProjectDetail implements OnInit {
     this.taskService.getTasks(projectId).subscribe({
       next: (tasks) => {
         this.tasks = tasks;
-      },
-      error: (err) => {
-        // Handle task loading error separately if needed
-        console.error('Failed to load tasks:', err);
       }
     });
   }

@@ -13,6 +13,22 @@
   animation: fadeInOut 4s;
 }
 
+.toast-notification.success {
+  background-color: #4CAF50;
+}
+
+.toast-notification.error {
+  background-color: #f44336;
+}
+
+.toast-notification.warning {
+  background-color: #ff9800;
+}
+
+.toast-notification.info {
+  background-color: #2196F3;
+}
+
 @keyframes fadeInOut {
   0% { opacity: 0; transform: translateY(-20px); }
   10% { opacity: 1; transform: translateY(0); }

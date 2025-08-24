@@ -43,15 +43,15 @@ export class DashboardComponent implements OnInit {
   loadDashboardData(): void {
     this.isLoading = true;
     this.projectService.getProjects().pipe(
-      mergeMap(projects => {
-        this.projects = projects;
-        this.totalProjects = projects.length;
+      mergeMap(paginatedResult => {
+        this.projects = paginatedResult.data;
+        this.totalProjects = paginatedResult.total;
 
-        if (projects.length === 0) {
+        if (this.projects.length === 0) {
           return of([]); // No projects, so no tasks
         }
 
-        const taskObservables = projects.map(project =>
+        const taskObservables = this.projects.map(project =>
           this.taskService.getTasks(project.id).pipe(
             catchError(err => {
               console.error(`Failed to load tasks for project ${project.id}:`, err);

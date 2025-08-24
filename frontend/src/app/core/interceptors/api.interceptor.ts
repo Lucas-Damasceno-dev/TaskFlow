@@ -9,9 +9,13 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { NotificationService } from '../services/notification.service';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
+
+  constructor(private notificationService: NotificationService) {}
+
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -20,8 +24,20 @@ export class ApiInterceptor implements HttpInterceptor {
 
     return next.handle(apiReq).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('Error from API interceptor', error);
-        return throwError(error);
+        let errorMessage = 'An unknown error occurred!';
+        if (error.error instanceof ErrorEvent) {
+          // Client-side errors
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          // Server-side errors
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+          if (error.error && error.error.message) {
+            errorMessage = error.error.message;
+          }
+        }
+        this.notificationService.showNotification(errorMessage, 'error');
+        console.error(error);
+        return throwError(() => new Error(errorMessage));
       })
     );
   }

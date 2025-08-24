@@ -4,6 +4,11 @@
     <a routerLink="/projects/new" class="btn btn-primary">Create Project</a>
   </header>
 
+  <div class="filter-controls">
+    <input type="text" [(ngModel)]="nameFilter" placeholder="Filter by name">
+    <button (click)="applyFilter()">Filter</button>
+  </div>
+
   <div *ngIf="isLoading" class="loading-indicator">
     <p>Loading projects...</p>
   </div>
@@ -40,5 +45,11 @@
         </tr>
       </tbody>
     </table>
+    <app-pagination 
+      [currentPage]="currentPage" 
+      [totalItems]="totalProjects" 
+      [itemsPerPage]="pageSize" 
+      (pageChange)="onPageChange($event)">
+    </app-pagination>
   </div>
 </div>
