@@ -22,7 +22,7 @@
           <td>{{ task.status }}</td>
           <td class="actions">
             <a [routerLink]="['/projects', task.projectId, 'tasks', 'edit', task.id]" class="btn btn-secondary">Edit</a>
-            <button class="btn btn-danger">Delete</button>
+            <button (click)="deleteTask(task.id)" class="btn btn-danger">Delete</button>
           </td>
         </tr>
       </tbody>

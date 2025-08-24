@@ -58,4 +58,8 @@ export class ProjectDetail implements OnInit {
       }
     });
   }
+
+  handleTaskDeleted(taskId: string): void {
+    this.tasks = this.tasks.filter(task => task.id !== taskId);
+  }
 }

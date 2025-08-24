@@ -26,7 +26,7 @@
         <a [routerLink]="['/projects', project.id, 'tasks', 'new']" class="btn btn-primary">Create Task</a>
       </header>
       <!-- Task list will be rendered here -->
-      <app-task-list [tasks]="tasks"></app-task-list>
+      <app-task-list [tasks]="tasks" (taskDeleted)="handleTaskDeleted($event)"></app-task-list>
     </section>
   </div>
 </div>
