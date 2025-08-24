@@ -5,6 +5,10 @@ import com.lucasdamasceno.taskflow.taskflow_backend.dto.AuthResponse;
 import com.lucasdamasceno.taskflow.taskflow_backend.dto.RegisterRequest;
 import com.lucasdamasceno.taskflow.taskflow_backend.security.JwtTokenProvider;
 import com.lucasdamasceno.taskflow.taskflow_backend.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 @Slf4j
+@Tag(name = "Authentication", description = "Endpoints for user authentication and registration")
 public class AuthController {
 
     private final AuthenticationManager authenticationManager;
@@ -30,6 +35,11 @@ public class AuthController {
     private final UserService userService;
 
     @PostMapping("/register")
+    @Operation(summary = "Register a new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User registered successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid request body")
+    })
     public ResponseEntity<String> register(@Valid @RequestBody RegisterRequest request) {
         log.info("Recebendo requisição de registro para o email: {}", request.getEmail());
         userService.registerUser(request);
@@ -37,6 +47,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Authenticate a user and return a JWT token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Authentication successful"),
+            @ApiResponse(responseCode = "401", description = "Invalid credentials")
+    })
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
         log.info("Recebendo requisição de login para o usuário: {}", request.getUsername());
         

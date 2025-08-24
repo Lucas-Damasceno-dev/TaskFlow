@@ -5,10 +5,14 @@
   </div>
   <nav class="nav">
     <ul>
-      <li><a href="/dashboard">Dashboard</a></li>
-      <li><a href="/projects">Projects</a></li>
-      <li><a href="/tasks">Tasks</a></li>
-      <li><a href="/users">Users</a></li>
+      <li><a href="/dashboard">{{ 'sidebar.dashboard' | translate }}</a></li>
+      <li><a href="/projects">{{ 'sidebar.projects' | translate }}</a></li>
+      <li><a href="/tasks">{{ 'sidebar.tasks' | translate }}</a></li>
+      <li><a href="/users">{{ 'sidebar.users' | translate }}</a></li>
     </ul>
   </nav>
+  <div class="language-switcher">
+    <button (click)="switchLanguage('en')">EN</button>
+    <button (click)="switchLanguage('pt')">PT</button>
+  </div>
 </div>

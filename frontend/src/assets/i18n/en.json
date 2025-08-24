@@ -1,0 +1,11 @@
+{
+  "dashboard": {
+    "title": "Dashboard"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "projects": "Projects",
+    "tasks": "Tasks",
+    "users": "Users"
+  }
+}

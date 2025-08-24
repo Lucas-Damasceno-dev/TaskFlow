@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>User Management</h1>
+  <button class="btn btn-primary mb-3" [routerLink]="['/users/new']">New User</button>
+
+  <div *ngIf="isLoading" class="loading-indicator">Loading...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <table *ngIf="!isLoading && !error" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>
+          <button class="btn btn-sm btn-primary me-2" (click)="editUser(user.id)">Edit</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination controls can be added here -->
+</div>

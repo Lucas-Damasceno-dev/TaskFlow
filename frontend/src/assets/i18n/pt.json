@@ -1,0 +1,11 @@
+{
+  "dashboard": {
+    "title": "Painel"
+  },
+  "sidebar": {
+    "dashboard": "Painel",
+    "projects": "Projetos",
+    "tasks": "Tarefas",
+    "users": "Usuários"
+  }
+}
